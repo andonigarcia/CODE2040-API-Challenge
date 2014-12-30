@@ -5,8 +5,8 @@ from urllib.request import Request, urlopen
 from json import dumps, loads
 
 token = "yicZ5DfAT6"
-string = "";
-revString = "";
+string = ""
+revString = ""
 
 def GetString():
 	global token, string
