@@ -3,6 +3,7 @@
 
 from urllib.request import Request, urlopen
 from json import dumps, loads
+import timeit
 
 token = "yicZ5DfAT6"
 string = ""
@@ -26,16 +27,16 @@ def ReverseString1():
 # MUCH SLOWER...but uses loops (I think the point of this exercise)
 def ReverseString2():
 	global string, revString
-	for i in range(len(string)):
-		revString = string[i] + revString[:]
-	print("The reversed string is: " + revString)
-
-# Uses loops in the more cononical way (Marginally slower than above)
-def ReverseString3():
-	global string, revString
 	strlen = len(string)
 	for i in range(strlen):
 		revString = revString[:] + string[strlen - 1 - i]
+	print("The reversed string is: " + revString)
+
+# More readable loop taking advantage of Python splice syntax. Slower still (not sure why)
+def ReverseString3():
+	global string, revString
+	for i in range(len(string)):
+		revString = string[i] + revString[:]
 	print("The reversed string is: " + revString)
 
 def PostString():
@@ -48,6 +49,16 @@ def PostString():
 	resp = urlopen(req)
 	result = loads(resp.read().decode('utf-8'))['result']
 	print("Result: " + result)
+
+# HIGHLY ADVISED TO COMMENT OUT PRINT STATEMENTS BEFORE EXECUTING TIMEFUNCS
+def TimeFuncs():
+	global revString
+	GetString()
+	print(str(timeit.timeit(ReverseString1, number = 30000)))
+	revString = ""
+	print(str(timeit.timeit(ReverseString2, number = 30000)))
+	revString = ""
+	print(str(timeit.timeit(ReverseString3, number = 30000)))
 
 def StageI():
 	GetString()

@@ -1,8 +1,9 @@
 # Andoni Garcia. 2014.
-# My source code for Stage I: Needle in a Haystack
+# My source code for Stage II: Needle in a Haystack
 
 from urllib.request import Request, urlopen
 from json import dumps, loads
+import timeit
 
 token = "yicZ5DfAT6"
 response = None
@@ -51,6 +52,12 @@ def PostIndex():
 	resp = urlopen(req)
 	result = loads(resp.read().decode('utf-8'))['result']
 	print("Result: " + result)
+
+# HIGHLY ADVISED TO COMMENT OUT PRINT STATEMENTS BEFORE EXECUTING TIMEFUNCS
+def TimeFuncs():
+	GetHaystack()
+	print(str(timeit.timeit(FindIndex1, number = 1000000)))
+	print(str(timeit.timeit(FindIndex2, number = 1000000)))
 
 def StageII():
 	GetHaystack()
