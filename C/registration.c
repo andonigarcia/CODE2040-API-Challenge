@@ -8,7 +8,7 @@ int main(int argc, char **argv)
 	if(argc > 1){
 		fprintf(stderr, "Please execute this without any additional arguments.\n");
 		fprintf(stderr, "The information is baked into the main function...as such, re-run this:\n");
-		fprintf(stderr, "./%s", argv[0]);
+		fprintf(stderr, "%s", argv[0]);
 		exit(0);
 	}
 
@@ -19,6 +19,6 @@ int main(int argc, char **argv)
 	char *response = HTTPPOSTRequest(domain, port, directory, message);
 	jsonObjList *responselist = jsonParse(response);
 	print_jsonObjList(responselist);
-	free(responselist);
+	free_jsonObjList(responselist);
 	return 0;
 }

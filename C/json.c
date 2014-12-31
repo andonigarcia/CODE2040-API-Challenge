@@ -60,58 +60,76 @@ void print_jsonObjList(jsonObjList *list)
 // Helper function to free a jsonObjList
 void free_jsonObjList(jsonObjList *list)
 {
-	while(list != NULL){
-		free_jsonObj(list->object);
-		jsonObjList *tmp = list;
-		list = list->next;
-		free(tmp);
-	}
+	if(list == NULL)
+		return;
+	free_jsonObj(list->object);
+	free_jsonObjList(list->next);
+	free(list);
 	return;
 }
 
 // Very simple JSON parser solely for use in the responses of the CODE2040 API Challenge
+// I think I have a memory leak with not freeing each strdup until the end.
 jsonObjList *jsonParse(char *jsonData)
 {
-	jsonObjList *list;
-	int isFirstObj = 1;
-
-	char *dataToParse = strdup(jsonData);
-	dataToParse += 1;  //Removes the first bracket ghetto-ly
-	dataToParse[strlen(dataToParse)-2] = ',';  //Makes last bracket a comma to parse easier
-	dataToParse[strlen(dataToParse)-1] = '\0';
-	
-	char *currentToken = strtok(dataToParse, ",");
-	while(currentToken != NULL){
-		int len = strlen(currentToken);
-		char key[len], val[len];
-		int isKey = 1;
-		int ct = 0;
-		int i;
-		for(i = 0; i < len; i++){
-			char c = currentToken[i];
-			if(c == '\"')
-				continue;
-			if(c == ':'){
-				ct = 0;
-				isKey = 0;
-				continue;
-			}
-			if(isKey){
-				key[ct++] = c;
-			} else {
-				val[ct++] = c;
-			}
-		}
-
-		jsonObj *parsedObj = new_jsonObj(key, val);
-		if(isFirstObj){
-			list = new_jsonObjList(parsedObj, NULL);
-			isFirstObj = 0;
-		} else {
-			list = new_jsonObjList(parsedObj, list);
-		}
-
-		currentToken = strtok(NULL, ",");
+	if(strlen(jsonData) == 0){
+		fprintf(stderr, "There is no response to parse...Check request status");
+		exit(0);
 	}
+
+	jsonObjList *list;
+	char *dataToParse = strdup(jsonData);
+	// Tried using strtok or other library functions, but arrays have commas and keys have colons and it becomes a bitch.
+	// Easier to implement, but less efficient (I'm sacrificing efficiency for comprehensiveness).
+	int isFirstObj = 1;
+	int isKey = 1;
+	int i;
+	char *key, *value;
+	for(i = 0; i < strlen(dataToParse); i++){
+		char tmpKey[1024];
+		char tmpValue[1024];
+		int count = 0;
+
+		char c = dataToParse[i];
+		if(c == '\"'){
+			// Switch Key/Value selection
+			if (isKey)
+				isKey = 0;
+			else
+				isKey = 1;
+
+			// Loop to go through rest of the selection
+			i++;
+			char curr;
+			while ((curr = dataToParse[i]) != '\"'){
+				// Backwards because I switched isKey at the top. Sorry.
+				if (isKey){
+					tmpValue[count++] = curr;
+				} else {
+					tmpKey[count++] = curr;
+				}
+				// Chose to increment at the end, so for loop isn't hindered
+				i++;
+			}
+			if (isKey){
+				value = strdup(tmpValue);
+			} else {
+				key = strdup(tmpKey);
+			}
+			count = 0;
+			// Went through both key and value and is back
+			if (isKey){
+				jsonObj *parsedObj = new_jsonObj(key, value);
+				if(isFirstObj){
+					list = new_jsonObjList(parsedObj, NULL);
+					isFirstObj = 0;
+				} else {
+					list = new_jsonObjList(parsedObj, list);
+				}
+			}
+		}
+	}
+	free(key);
+	free(value);
 	return list;
 }
