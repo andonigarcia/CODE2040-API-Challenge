@@ -48,6 +48,14 @@ function PostTime(){
 	xmlhttp.send(JSONData);
 }
 
+// HIGHLY ADVISED TO COMMENT OUT PRINT STATEMENTS BEFORE EXECUTING TIMEFUNCS
+function TimeFuncs(){
+	GetTime();
+	console.time('AddTime');
+	AddTime();
+	console.timeEnd('AddTime');
+}
+
 function StageIV(){
 	GetTime();
 	AddTime();

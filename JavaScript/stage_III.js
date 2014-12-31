@@ -50,6 +50,14 @@ function PostArray(){
 	xmlhttp.send(JSONData);
 }
 
+// HIGHLY ADVISED TO COMMENT OUT PRINT STATEMENTS BEFORE EXECUTING TIMEFUNCS
+function TimeFuncs(){
+	GetPrefix();
+	console.time('FilterArray');
+	FilterArray();
+	console.timeEnd('FilterArray');
+}
+
 function StageIII(){
 	GetPrefix();
 	FilterArray();

@@ -22,7 +22,17 @@ function GetString(){
 	xmlhttp.send(JSONData);
 }
 
+// Reverse is so optimized that going from string to array and back is faster
 function ReverseString1(){
+	var string = response.result;
+	var array = string.split("");
+	var revArray = array.reverse();
+	revString = array.join("");
+	console.log("The reversed string is: " + revString);
+}
+
+// The traditional looping. Slower than above.
+function ReverseString2(){
 	var string = response.result;
 	for (i = 0; i < string.length; i++){
 		revString += string.charAt(string.length - 1 - i);
@@ -35,7 +45,7 @@ function ReverseString2(){
 	var array = string.split("");
 	var revArray = array.reverse();
 	revString = array.join("");
-	console.log("The reversed string is: " + revString);
+	//console.log("The reversed string is: " + revString);
 }
 
 function PostString(){
@@ -52,6 +62,17 @@ function PostString(){
 	xmlhttp.open("POST", url, false);
 	xmlhttp.setRequestHeader("content-type", "application/json");
 	xmlhttp.send(JSONData);
+}
+
+// HIGHLY ADVISED TO COMMENT OUT PRINT STATEMENTS BEFORE EXECUTING TIMEFUNCS
+function TimeFuncs(){
+	GetString();
+	console.time('ReverseString1');
+	ReverseString1();
+	console.timeEnd('ReverseString1');
+	console.time('ReverseString2');
+	ReverseString2();
+	console.timeEnd('ReverseString2');
 }
 
 function StageI(){

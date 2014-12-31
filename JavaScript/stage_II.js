@@ -58,6 +58,18 @@ function PostIndex(){
 	xmlhttp.send(JSONData);
 }
 
+// HIGHLY ADVISED TO COMMENT OUT PRINT STATEMENTS BEFORE EXECUTING TIMEFUNCS
+function TimeFuncs(){
+	GetHaystack();
+	console.time('FindIndex1');
+	FindIndex1();
+	console.timeEnd('FindIndex1');
+	console.time('FindIndex2');
+	FindIndex2();
+	console.timeEnd('FindIndex2');
+}
+
+
 function StageII(){
 	GetHaystack();
 	FindIndex1();
