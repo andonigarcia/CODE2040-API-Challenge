@@ -23,10 +23,18 @@ function GetString(){
 }
 
 function ReverseString1(){
-	var string = response.result
+	var string = response.result;
 	for (i = 0; i < string.length; i++){
 		revString += string.charAt(string.length - 1 - i);
 	}
+	console.log("The reversed string is: " + revString);
+}
+
+function ReverseString2(){
+	var string = response.result;
+	var array = string.split("");
+	var revArray = array.reverse();
+	revString = array.join("");
 	console.log("The reversed string is: " + revString);
 }
 
