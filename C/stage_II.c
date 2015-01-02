@@ -22,23 +22,22 @@ int main(int argc, char **argv)
 	char *getDirectory = "/api/haystack";
 	char *getMessage = "{\"token\":\"yicZ5DfAT6\"}";
 	char *getResponse = HTTPPOSTRequest(domain, port, getDirectory, getMessage);
-	printf("%s\n\n", getResponse);
 	jsonObjList *getResponseList = jsonParse(getResponse);
-	print_jsonObjList(getResponseList);
-	haystack = strdup(getResponseList->object->value);
-	needle = strdup(getResponseList->next->object->value);
+	jsonObjList *getValues = jsonParse(getResponseList->object->value);
+	print_jsonObjList(getValues);
+	needle = strdup(getValues->object->value);
+	haystack = strdup(getValues->next->object->value);
 	free_jsonObjList(getResponseList);
+	free_jsonObjList(getValues);
 
 	// Find the Index
-	haystack += 1;  //Removes first bracket in the array
-	haystack[strlen(haystack) - 1] = '\0';  //Removes last bracket
-	char *curr = strtok(haystack, ",");
+	char *curr = strtok(haystack, ",\"");
 	index++;
 	while(strcmp(curr, needle) != 0){
 		index++;
-		curr = strtok(NULL, ",");
+		curr = strtok(NULL, ",\"");
 	}
-	printf("Index is: %d\n", index);
+	printf("Index is: %d\n\n", index);
 
 	// Send the Index
 	char *sendDirectory = "/api/validateneedle";
