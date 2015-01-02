@@ -8,7 +8,7 @@ Currently the languages I have are:
 
 1. Python - Complete
 2. JavaScript - Complete
-3. C - In Progress
+3. C - Complete (Cleaning up code currently)
 4. PHP - In Queue to Start
 
 As I eluded to above, I will also get around to making an interactive Web Page, where you can see the challenges visibly and my solutions to them.
