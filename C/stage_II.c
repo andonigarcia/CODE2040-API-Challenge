@@ -48,7 +48,7 @@ int main(int argc, char **argv)
 	free(haystack);
 	jsonObjList *sendResponseList = jsonParse(sendResponse);
 	print_jsonObjList(sendResponseList);
-	free(sendResponseList);
+	free_jsonObjList(sendResponseList);
 
 	return 0;
 }

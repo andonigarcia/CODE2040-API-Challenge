@@ -118,6 +118,7 @@ jsonObjList *jsonParse(char *jsonData)
 				while((next = dataToParse[i++]) != '\"')
 					value[count++] = next;
 			} else {
+				value[count++] = curr;
 				while((next = dataToParse[i++]) != ',' && next != '}')
 					value[count++] = next;
 			}

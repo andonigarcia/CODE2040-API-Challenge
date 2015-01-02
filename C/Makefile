@@ -13,5 +13,11 @@ stageI: CODE2040.h $(SRC) stage_I.c
 stageII: CODE2040.h $(SRC) stage_II.c
 	gcc -Wall -o stageII $(SRC) stage_II.c -lm
 
+stageIII: CODE2040.h $(SRC) stage_III.c
+	gcc -Wall -o stageIII $(SRC) stage_III.c -lm
+
+stageIV: CODE2040.h $(SRC) stage_IV.c
+	gcc -Wall -o stageIV $(SRC) stage_IV.c -lm
+
 clean:
-	rm -rf register stageI stageII
+	rm -rf register stageI stageII stageIII stageIV
