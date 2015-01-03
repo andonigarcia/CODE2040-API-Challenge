@@ -76,7 +76,7 @@ void free_jsonObjList(jsonObjList *list)
 jsonObjList *jsonParse(char *jsonData)
 {
 	if(strlen(jsonData) == 0){
-		fprintf(stderr, "There is no response to parse...Check request status\n");
+		fprintf(stderr, "There is no response to parse...Check the HTTP Response\n");
 		exit(0);
 	}
 
@@ -104,7 +104,7 @@ jsonObjList *jsonParse(char *jsonData)
 				key[count++] = curr;
 			count = 0;
 			// Skip the colon
-			while((curr = dataToParse[i++]) != ':');
+			curr = dataToParse[i++];
 			// Grab the value
 			curr = dataToParse[i++];
 			char next;

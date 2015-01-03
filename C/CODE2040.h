@@ -72,4 +72,45 @@ jsonObjList *jsonParse(char *jsonData);
 char *HTTPPOSTRequest(char *domain, int port, char *directory, char *message, char *content);
 
 // Handles Getting/Sending info to the CODE2040 Challenge
-void grabInfo(char *domain, int port, char *page, char *message, char **Option1, char **Option2, int levels);
+void grabInfo(char *domain, int port, char *page, char *message, char **Option1, char **Option2, int levels, int print);
+
+// Makes the get message
+char *getMsg(char *token);
+
+// Makes the typical json-encoded message for sending answers
+char *sendMsg(char *key1, char *value1, char *key2, char *value2, int opt);
+
+/*  ================================================================
+	================================================================
+	===================== interfacemessages.c ======================
+	================================================================
+	================================================================
+*/
+
+void err_multArgs1(char *argv);
+
+void msg_welcome();
+
+void msg_register();
+
+void msg_registerEmail();
+
+void msg_registerGithub();
+
+void msg_token(char *token);
+
+void msg_success();
+
+void msg_failure();
+
+void msg_pass(char *stage);
+
+void msg_notPass(char *msg);
+
+void msg_stageIWelcome();
+
+void msg_stageIIWelcome();
+
+void msg_stageIIIWelcome();
+
+void msg_stageIVWelcome();

@@ -14,49 +14,48 @@ int main(int argc, char **argv)
 
 	char *domain = "challenge.code2040.org";
 	int port = 80;
-	char *datestamp = "";
-	char *tmpInt = "";
+	char *datestamp, *tmpInt, newTime[1024];
 	long long int interval;
-	char newTime[1024];
-	int i;
+	int i, year, month, day, hour, min;
+	float sec;
 	for(i = 0; i < 1024; i++){
 		newTime[i] = '\0';
 	}
 	
 	// Get the Time
-	char *getDirectory = "/api/time";
 	char *getMessage = "{\"token\":\"yicZ5DfAT6\"}";
-	grabInfo(domain, port, "time", getMessage, &tmpInt, &datestamp, 2);
+	grabInfo(domain, port, "time", getMessage, &tmpInt, &datestamp, 2, 1);
 	interval = atoi(tmpInt);
 
 	printf("%s\n%s\n%lld\n", datestamp, tmpInt, interval);
 
 	// Add the Times
-	// Currently have to use localtime - 1 for some reason
-	int year, month, day, hour, min;
-	float sec;
-	sscanf(datestamp, "%d-%d-%dT%d:%d:%fZ", &year, &month, &day, &hour, &min, &sec);
-	time_t initialize;
-	time(&initialize);
-	struct tm *givenTime = gmtime(&initialize);
-	givenTime->tm_year = year - 1900;
-	givenTime->tm_mon = month - 1;
-	givenTime->tm_mday = day;
-	givenTime->tm_hour = hour;
-	givenTime->tm_min = min;
-	givenTime->tm_sec = (int) sec;
-	time_t unixTime = mktime(givenTime);
-	unixTime += interval;
-	struct tm *addTime = localtime(&unixTime);
-	sprintf(newTime, "%04d-%02d-%02dT%02d:%02d:%02d.000Z", addTime->tm_year + 1900,
-		addTime->tm_mon + 1, addTime->tm_mday, addTime->tm_hour - 1, addTime->tm_min,
-		addTime->tm_sec);
-	printf("New time is: %s\n\n", newTime);
+	// Broken on cygwin, see: http://stackoverflow.com/questions/310363/how-to-add-one-day-to-a-time-obtained-from-time
+	// Tested on online IDE. Works fine.
+	if(datestamp && tmpInt && (interval > 0)){
+		sscanf(datestamp, "%d-%d-%dT%d:%d:%fZ", &year, &month, &day, &hour, &min, &sec);
+		time_t initialize;
+		time(&initialize);
+		struct tm *givenTime = localtime(&initialize);
+		givenTime->tm_year = year - 1900;
+		givenTime->tm_mon = month - 1;
+		givenTime->tm_mday = day;
+		givenTime->tm_hour = hour;
+		givenTime->tm_min = min;
+		givenTime->tm_sec = (int) sec;
+		time_t unixTime = mktime(givenTime);
+		unixTime += interval;
+		struct tm *addTime = localtime(&unixTime);
+		sprintf(newTime, "%04d-%02d-%02dT%02d:%02d:%02d.000Z", addTime->tm_year + 1900,
+			addTime->tm_mon + 1, addTime->tm_mday, addTime->tm_hour, addTime->tm_min,
+			addTime->tm_sec);
+	}
+	printf("\nNew time is: %s\n\n", newTime);
 	
 	// Send the Time
 	char sendMessage[2048];
 	sprintf(sendMessage, "{\"token\":\"yicZ5DfAT6\",\"datestamp\":\"%s\"}", newTime);
-	//free(datestamp);
-	grabInfo(domain, port, "validatetime", sendMessage, NULL, NULL, 1);
+	free(datestamp);
+	grabInfo(domain, port, "validatetime", sendMessage, NULL, NULL, 1, 1);
 	return 0;
 }

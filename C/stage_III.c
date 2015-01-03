@@ -23,38 +23,40 @@ int main(int argc, char **argv)
 
 	// Get the Prefix/Array
 	char *getMessage = "{\"token\":\"yicZ5DfAT6\"}";
-	grabInfo(domain, port, "prefix", getMessage, &prefix, &array, 2);
+	grabInfo(domain, port, "prefix", getMessage, &prefix, &array, 2, 1);
 
 	// Filter the Array
 	int count = 0;
-	filteredArray[count++] = '[';
-	char *curr = strtok(array, ",\"");
-	while(curr != NULL){
-		int isEqual = 1;
-		for(i = 0; i < strlen(prefix); i++){
-			if(prefix[i] != curr[i]){
-				isEqual = 0;
-				break;
+	if(prefix && array){
+		filteredArray[count++] = '[';
+		char *curr = strtok(array, ",\"");
+		while(curr != NULL){
+			int isEqual = 1;
+			for(i = 0; i < strlen(prefix); i++){
+				if(prefix[i] != curr[i]){
+					isEqual = 0;
+					break;
+				}
 			}
+			if(!isEqual){
+				filteredArray[count++] = '\"';
+				for(i = 0; i < strlen(curr); i++)
+					filteredArray[count++] = curr[i];
+				filteredArray[count++] = '\"';
+				filteredArray[count++] = ',';
+			}
+			curr = strtok(NULL, ",\"");
 		}
-		if(!isEqual){
-			filteredArray[count++] = '\"';
-			for(i = 0; i < strlen(curr); i++)
-				filteredArray[count++] = curr[i];
-			filteredArray[count++] = '\"';
-			filteredArray[count++] = ',';
-		}
-		curr = strtok(NULL, ",\"");
+		filteredArray[--count] = ']';
 	}
-	filteredArray[--count] = ']';
-	printf("Filtered Array is: %s\n\n", filteredArray);
+	printf("\nFiltered Array is: %s\n\n", filteredArray);
 
 	// Send the Array
 	char sendMessage[2048];
 	sprintf(sendMessage, "{\"token\":\"yicZ5DfAT6\",\"array\":%s}", filteredArray);
-	//free(prefix);
-	//free(array);
-	grabInfo(domain, port, "validateprefix", sendMessage, NULL, NULL, 1);
+	free(prefix);
+	free(array);
+	grabInfo(domain, port, "validateprefix", sendMessage, NULL, NULL, 1, 1);
 
 	return 0;
 }

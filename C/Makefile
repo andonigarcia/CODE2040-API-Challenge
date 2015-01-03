@@ -3,8 +3,11 @@
 .PHONY: clean
 
 CC = gcc
-CFLAGS = -o
-SRC = json.c httppost.c
+CFLAGS = -Wall -o
+SRC = json.c httppost.c interfacemessages.c
+
+interface: CODE2040.h $(SRC) interface.c
+	$(CC) $(CFLAGS) interface $(SRC) interface.c
 
 register: CODE2040.h $(SRC) registration.c 
 	$(CC) $(CFLAGS) register $(SRC) registration.c
@@ -22,4 +25,4 @@ stageIV: CODE2040.h $(SRC) stage_IV.c
 	$(CC) $(CFLAGS) stageIV $(SRC) stage_IV.c
 
 clean:
-	rm -rf register stageI stageII stageIII stageIV
+	rm -rf interface register stageI stageII stageIII stageIV

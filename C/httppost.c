@@ -62,21 +62,29 @@ char *HTTPPOSTRequest(char *domain, int port, char *directory, char *message, ch
 }
 
 // Handles Getting/Sending info to the CODE2040 Challenge
-void grabInfo(char *domain, int port, char *page, char *message, char **Option1, char **Option2, int levels){
-	if(levels != 1 && levels != 2){
-		fprintf(stderr, "This function only supports jsonParsing 1 or 2 levels deep.\
-			 Please check your input to grabInfo().\n");
-		exit(0);
-	}
+void grabInfo(char *domain, int port, char *page, char *message, char **Option1, char **Option2, int levels, int print){
 	if(domain == NULL || port < 1 || page == NULL || message == NULL){
-		fprintf(stderr, "An HTTP POST request cannot be made without a proper domain,\
-			 port, page, and message input. Please check your input to grabInfo().\n");
+		fprintf(stderr, "An HTTP POST request cannot be made without a proper "
+			    "domain, port, page, and message input. Please check your input"
+			    " to grabInfo().\n");
 		exit(0);
 	}
-
+	if(levels != 1 && levels != 2){
+		fprintf(stderr, "This function only supports jsonParsing 1 or 2 levels "
+			   "deep. Please check your input to grabInfo().\n");
+		exit(0);
+	}
+	if(print != 0 && print != 1){
+		fprintf(stderr, "The print argument acts as a boolean. Please enter "
+			    "either 0 or 1 for the answer corresponding to false or true.");
+		exit(0);
+	}
+	// Sets up the HTTP Request
 	char directory[512];
 	sprintf(directory, "/api/%s", page);
+
 	char *response = HTTPPOSTRequest(domain, port, directory, message, "application/json");
+	
 	jsonObjList *respList = jsonParse(response);
 	jsonObjList *jsonList = respList;
 	if(levels == 2){
@@ -86,9 +94,27 @@ void grabInfo(char *domain, int port, char *page, char *message, char **Option1,
 		*Option1 = strdup(jsonList->object->value);
 	if(jsonList->next != NULL && Option2 != NULL)
 		*Option2 = strdup(jsonList->next->object->value);
-	print_jsonObjList(jsonList);
+	if(print)
+		print_jsonObjList(jsonList);
 	free(respList);
 	if(levels == 2)
 		free(jsonList);
 	return;
+}
+
+// Makes the get message
+char *getMsg(char *token){
+	char message[1024];
+	sprintf(message, "{\"token\":\"%s\"}", token);
+	return strdup(message);
+}
+
+// Makes the typical json-encoded message for sending answers
+char *sendMsg(char *key1, char *value1, char *key2, char *value2, int quotes){
+	char message[2048];
+	if(quotes)
+		sprintf(message, "{\"%s\":\"%s\",\"%s\":\"%s\"}", key1, value1, key2, value2);
+	else
+		sprintf(message, "{\"%s\":\"%s\",\"%s\":%s}", key1, value1, key2, value2);
+	return strdup(message);
 }

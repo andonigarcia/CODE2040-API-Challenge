@@ -20,22 +20,24 @@ int main(int argc, char **argv)
 
 	// Get the Needle/Haystack
 	char *getMessage = "{\"token\":\"yicZ5DfAT6\"}";
-	grabInfo(domain, port, "haystack", getMessage, &needle, &haystack, 2);
+	grabInfo(domain, port, "haystack", getMessage, &needle, &haystack, 2, 1);
 
 	// Find the Index
-	char *curr = strtok(haystack, ",\"");
-	index++;
-	while(strcmp(curr, needle) != 0){
+	if(needle && haystack){
+		char *curr = strtok(haystack, ",\"");
 		index++;
-		curr = strtok(NULL, ",\"");
+		while(strcmp(curr, needle)){
+			index++;
+			curr = strtok(NULL, ",\"");
+		}
 	}
-	printf("Index is: %d\n\n", index);
+	printf("\nIndex is: %d\n\n", index);
 
 	// Send the Index
 	char sendMessage[2048];
 	sprintf(sendMessage, "{\"token\":\"yicZ5DfAT6\",\"needle\":%d}", index);
-	//free(needle);
-	//free(haystack);
-	grabInfo(domain, port, "validateneedle", sendMessage, NULL, NULL, 1);
+	free(needle);
+	free(haystack);
+	grabInfo(domain, port, "validateneedle", sendMessage, NULL, NULL, 1, 1);
 	return 0;
 }
