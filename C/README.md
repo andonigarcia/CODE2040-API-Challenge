@@ -11,9 +11,9 @@ I still need to parse and handle bad json and bad responses (i.e. The server's a
 1. Download the source files
 2. Run `make`
 3. Execute `./interface`
-4. When prompted, either:</br>
-  a. Enter your credentials (if you are a CODE2040 applicant)
-  b. Enter `a` for both questions to trigger my credentials
+4. When prompted, either:
+  * Enter your credentials (if you are a CODE2040 applicant)
+  * Enter `a` for both questions to trigger my credentials
 
 ## Debugging and Individual Stages
 
