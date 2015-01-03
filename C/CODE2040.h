@@ -69,5 +69,7 @@ jsonObjList *jsonParse(char *jsonData);
 */
 
 // Sends an HTTP POST Request and returns the response
-// THE MESSAGE MUST BE JSON ENCODED (I guess I could remove this feature later...)
-char *HTTPPOSTRequest(char *domain, int port, char *directory, char *message);
+char *HTTPPOSTRequest(char *domain, int port, char *directory, char *message, char *content);
+
+// Handles Getting/Sending info to the CODE2040 Challenge
+void grabInfo(char *domain, int port, char *page, char *message, char **Option1, char **Option2, int levels);

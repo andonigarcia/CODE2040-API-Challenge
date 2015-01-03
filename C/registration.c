@@ -14,11 +14,7 @@ int main(int argc, char **argv)
 
 	char *domain = "challenge.code2040.org";
 	int port = 80;
-	char *directory = "/api/register";
 	char *message = "{\"email\":\"andoni@uchicago.edu\",\"github\":\"https://github.com/andonigarcia/CODE2040-API-Challenge\"}";
-	char *response = HTTPPOSTRequest(domain, port, directory, message);
-	jsonObjList *responselist = jsonParse(response);
-	print_jsonObjList(responselist);
-	free_jsonObjList(responselist);
+	grabInfo(domain, port, "register", message, NULL, NULL, 1);
 	return 0;
 }

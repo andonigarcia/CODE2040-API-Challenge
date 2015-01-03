@@ -14,21 +14,13 @@ int main(int argc, char **argv)
 
 	char *domain = "challenge.code2040.org";
 	int port = 80;
-	char *needle;
-	char *haystack;
+	char *needle = "";
+	char *haystack = "";
 	int index = -1;
 
 	// Get the Needle/Haystack
-	char *getDirectory = "/api/haystack";
 	char *getMessage = "{\"token\":\"yicZ5DfAT6\"}";
-	char *getResponse = HTTPPOSTRequest(domain, port, getDirectory, getMessage);
-	jsonObjList *getResponseList = jsonParse(getResponse);
-	jsonObjList *getValues = jsonParse(getResponseList->object->value);
-	print_jsonObjList(getValues);
-	needle = strdup(getValues->object->value);
-	haystack = strdup(getValues->next->object->value);
-	free_jsonObjList(getResponseList);
-	free_jsonObjList(getValues);
+	grabInfo(domain, port, "haystack", getMessage, &needle, &haystack, 2);
 
 	// Find the Index
 	char *curr = strtok(haystack, ",\"");
@@ -40,15 +32,10 @@ int main(int argc, char **argv)
 	printf("Index is: %d\n\n", index);
 
 	// Send the Index
-	char *sendDirectory = "/api/validateneedle";
 	char sendMessage[2048];
 	sprintf(sendMessage, "{\"token\":\"yicZ5DfAT6\",\"needle\":%d}", index);
-	char *sendResponse = HTTPPOSTRequest(domain, port, sendDirectory, sendMessage);
-	free(needle);
-	free(haystack);
-	jsonObjList *sendResponseList = jsonParse(sendResponse);
-	print_jsonObjList(sendResponseList);
-	free_jsonObjList(sendResponseList);
-
+	//free(needle);
+	//free(haystack);
+	grabInfo(domain, port, "validateneedle", sendMessage, NULL, NULL, 1);
 	return 0;
 }

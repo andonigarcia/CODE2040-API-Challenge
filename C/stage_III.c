@@ -14,24 +14,16 @@ int main(int argc, char **argv)
 
 	char *domain = "challenge.code2040.org";
 	int port = 80;
-	char *prefix;
-	char *array;
+	char *prefix = "";
+	char *array = "";
 	char filteredArray[1024];
 	int i;
 	for(i = 0; i < 1024; i++)
 		filteredArray[i] = '\0';
 
 	// Get the Prefix/Array
-	char *getDirectory = "/api/prefix";
 	char *getMessage = "{\"token\":\"yicZ5DfAT6\"}";
-	char *getResponse = HTTPPOSTRequest(domain, port, getDirectory, getMessage);
-	jsonObjList *getResponseList = jsonParse(getResponse);
-	jsonObjList *getValues = jsonParse(getResponseList->object->value);
-	print_jsonObjList(getValues);
-	prefix = strdup(getValues->object->value);
-	array = strdup(getValues->next->object->value);
-	free_jsonObjList(getResponseList);
-	free_jsonObjList(getValues);
+	grabInfo(domain, port, "prefix", getMessage, &prefix, &array, 2);
 
 	// Filter the Array
 	int count = 0;
@@ -58,15 +50,11 @@ int main(int argc, char **argv)
 	printf("Filtered Array is: %s\n\n", filteredArray);
 
 	// Send the Array
-	char *sendDirectory = "/api/validateprefix";
 	char sendMessage[2048];
 	sprintf(sendMessage, "{\"token\":\"yicZ5DfAT6\",\"array\":%s}", filteredArray);
-	char *sendResponse = HTTPPOSTRequest(domain, port, sendDirectory, sendMessage);
-	free(array);
-	free(prefix);
-	jsonObjList *sendResponseList = jsonParse(sendResponse);
-	print_jsonObjList(sendResponseList);
-	free_jsonObjList(sendResponseList);
+	//free(prefix);
+	//free(array);
+	grabInfo(domain, port, "validateprefix", sendMessage, NULL, NULL, 1);
 
 	return 0;
 }

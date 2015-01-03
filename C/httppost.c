@@ -4,8 +4,7 @@
 #include "CODE2040.h"
 
 // Sends an HTTP POST Request and returns the response
-// THE MESSAGE MUST BE JSON ENCODED (I guess I could remove this feature later...)
-char *HTTPPOSTRequest(char *domain, int port, char *directory, char *message)
+char *HTTPPOSTRequest(char *domain, int port, char *directory, char *message, char *content)
 {
 	char request[5120];
 	struct hostent *server;
@@ -39,20 +38,57 @@ char *HTTPPOSTRequest(char *domain, int port, char *directory, char *message)
 
 	// Writes the HTTP POST Request using JSON
 	bzero(request, 5120);
-	sprintf(request, "POST %s HTTP/1.1\r\nHost: %s\r\nContent-type: application/json\r\nContent-length: %d\r\n\r\n%s", directory, domain, (int) strlen(message), message);
+	sprintf(request, "POST %s HTTP/1.1\r\nHost: %s\r\nContent-type: %s\r\nContent-length: %d\r\n\r\n%s",
+		directory, domain, content, (int) strlen(message), message);
 	if(send(newSocket, request, strlen(request), 0) < 0){
-		fprintf(stderr, "ERROR: Problem sending request\n");
+		fprintf(stderr, "ERROR: Problem sending request.\n");
 		exit(0);
 	}
 
 	// Gets the response
-	recv(newSocket, request, 5120, 0);
-	char *response = strstr(request, "\r\n\r\n");
-	if(response == NULL){
-		fprintf(stderr, "ERROR: Bad response\n");
+	if(recv(newSocket, request, 5120, 0) < 0){
+		fprintf(stderr, "ERROR: Could not get response.\n");
 		exit(0);
 	}
+	char *response = strstr(request, "\r\n\r\n");
+	if(response == NULL){
+		fprintf(stderr, "ERROR: Cannot parse response.\n");
+		exit(0);
+	}
+
 	close(newSocket);
 	response += 4;
 	return strdup(response);
+}
+
+// Handles Getting/Sending info to the CODE2040 Challenge
+void grabInfo(char *domain, int port, char *page, char *message, char **Option1, char **Option2, int levels){
+	if(levels != 1 && levels != 2){
+		fprintf(stderr, "This function only supports jsonParsing 1 or 2 levels deep.\
+			 Please check your input to grabInfo().\n");
+		exit(0);
+	}
+	if(domain == NULL || port < 1 || page == NULL || message == NULL){
+		fprintf(stderr, "An HTTP POST request cannot be made without a proper domain,\
+			 port, page, and message input. Please check your input to grabInfo().\n");
+		exit(0);
+	}
+
+	char directory[512];
+	sprintf(directory, "/api/%s", page);
+	char *response = HTTPPOSTRequest(domain, port, directory, message, "application/json");
+	jsonObjList *respList = jsonParse(response);
+	jsonObjList *jsonList = respList;
+	if(levels == 2){
+		jsonList = jsonParse(respList->object->value);
+	}
+	if(Option1 != NULL)
+		*Option1 = strdup(jsonList->object->value);
+	if(jsonList->next != NULL && Option2 != NULL)
+		*Option2 = strdup(jsonList->next->object->value);
+	print_jsonObjList(jsonList);
+	free(respList);
+	if(levels == 2)
+		free(jsonList);
+	return;
 }

@@ -14,16 +14,11 @@ int main(int argc, char **argv)
 
 	char *domain = "challenge.code2040.org";
 	int port = 80;
-	char *string;
+	char *string = "";
 
 	// Get the String
-	char *getDirectory = "/api/getstring";
 	char *getMessage = "{\"token\":\"yicZ5DfAT6\"}";
-	char *getResponse = HTTPPOSTRequest(domain, port, getDirectory, getMessage);
-	jsonObjList *getResponseList = jsonParse(getResponse);
-	print_jsonObjList(getResponseList);
-	string = strdup(getResponseList->object->value);
-	free_jsonObjList(getResponseList);
+	grabInfo(domain, port, "getstring", getMessage, &string, NULL, 1);
 
 	// Reverse the String
 	int len = strlen(string);
@@ -34,17 +29,13 @@ int main(int argc, char **argv)
 		string[i] = string[len -i];
 		string[len - i] = tmp;
 	}
-	printf("Reversed: %s\n\n", string);
+	printf("\nReversed: %s\n\n", string);
 
 	// Send the Reversed String
-	char *sendDirectory = "/api/validatestring";
 	char sendMessage[2048];
 	sprintf(sendMessage, "{\"token\":\"yicZ5DfAT6\",\"string\":\"%s\"}", string);
-	char *sendResponse = HTTPPOSTRequest(domain, port, sendDirectory, sendMessage);
-	free(string);
-	jsonObjList *sendResponseList = jsonParse(sendResponse);
-	print_jsonObjList(sendResponseList);
-	free_jsonObjList(sendResponseList);
-
+	printf("Freeeeeeing\n");
+	//free(string);
+	grabInfo(domain, port, "validatestring", sendMessage, NULL, NULL, 1);
 	return 0;
 }

@@ -14,7 +14,8 @@ int main(int argc, char **argv)
 
 	char *domain = "challenge.code2040.org";
 	int port = 80;
-	char *datestamp;
+	char *datestamp = "";
+	char *tmpInt = "";
 	long long int interval;
 	char newTime[1024];
 	int i;
@@ -25,15 +26,11 @@ int main(int argc, char **argv)
 	// Get the Time
 	char *getDirectory = "/api/time";
 	char *getMessage = "{\"token\":\"yicZ5DfAT6\"}";
-	char *getResponse = HTTPPOSTRequest(domain, port, getDirectory, getMessage);
-	jsonObjList *getResponseList = jsonParse(getResponse);
-	jsonObjList *getValues = jsonParse(getResponseList->object->value);
-	print_jsonObjList(getValues);
-	interval = atoi(getValues->object->value);
-	datestamp = strdup(getValues->next->object->value);
-	free_jsonObjList(getResponseList);
-	free_jsonObjList(getValues);
-	
+	grabInfo(domain, port, "time", getMessage, &tmpInt, &datestamp, 2);
+	interval = atoi(tmpInt);
+
+	printf("%s\n%s\n%lld\n", datestamp, tmpInt, interval);
+
 	// Add the Times
 	// Currently have to use localtime - 1 for some reason
 	int year, month, day, hour, min;
@@ -57,14 +54,9 @@ int main(int argc, char **argv)
 	printf("New time is: %s\n\n", newTime);
 	
 	// Send the Time
-	char *sendDirectory = "/api/validatetime";
 	char sendMessage[2048];
 	sprintf(sendMessage, "{\"token\":\"yicZ5DfAT6\",\"datestamp\":\"%s\"}", newTime);
-	char *sendResponse = HTTPPOSTRequest(domain, port, sendDirectory, sendMessage);
-	free(datestamp);
-	jsonObjList *sendResponseList = jsonParse(sendResponse);
-	print_jsonObjList(sendResponseList);
-	free_jsonObjList(sendResponseList);
-	
+	//free(datestamp);
+	grabInfo(domain, port, "validatetime", sendMessage, NULL, NULL, 1);
 	return 0;
 }
