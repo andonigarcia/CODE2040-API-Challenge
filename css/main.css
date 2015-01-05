@@ -1,0 +1,145 @@
+/*
+ * Andoni M. Garcia. 2015.
+ * CODE2040 API Challenge
+ */
+
+body, html{
+    height: 100%;
+    min-height: 100%;
+    width: 100%;
+    min-width: 100%;
+}
+body{
+    background-color: #8ca490;
+    color: black;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+}
+
+/* Header */
+
+.header{
+    background-color: #8899A2;
+    border-bottom: 1px solid black;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+    height: 60px;
+    float: left;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    width: 100%;
+}
+
+.header p{
+    color: #800000;
+    font-family: Times, serif;
+    font-size: 18px;
+    margin-left: 5%;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.header p span{
+    font-weight: bold;
+    font-size: 24px;
+    margin-right: 8px;
+}
+
+.header a, .header a:visited{
+    color: #993232;
+    text-decoration: none;
+}
+
+.header a:hover, .header a:active{
+    color: #993232;
+    text-decoration: underline;
+}
+
+/* Completion */
+
+.completions{
+    background-color: #9c878d;
+    -webkit-border-radius: 4px;
+       -moz-border-radius: 4px;
+            border-radius: 4px;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+    height: 50px;
+    position: relative;
+    margin: 2% auto;
+    top: 60px;  /* Height of header */
+    width: 85%;
+}
+
+/* Content */
+
+.content{
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+    margin: 0 auto;
+    position: relative;
+    top: 85px;
+    width: 90%;
+}
+
+/* Buttons */
+
+.buttons{
+    background-color: #9c878d;
+    -webkit-border-radius: 4px;
+       -moz-border-radius: 4px;
+            border-radius: 4px;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+    float: left;
+    height: 60%;
+    position: relative;
+    width: 125px;
+}
+
+.buttons div{
+    top: 4%;
+    position: relative;
+}
+
+.buttons button{
+    background: #9898FF;
+    border: 1px solid black;
+    border-radius: 7px;
+    display: block;
+    margin: 30px auto;
+    padding: 5px 5px;
+    position: relative;
+    width: 75px;
+}
+
+.buttons button:hover{
+    background: #cc98ff;
+}
+
+.buttons button:active{
+    background: #ff9898;
+}
+
+/* I/O Content */
+
+.ioresponse{
+    background-color: #9c878d;
+    -webkit-border-radius: 4px;
+       -moz-border-radius: 4px;
+            border-radius: 4px;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+    float: right;
+    height: 60%;
+    position: relative;
+    width: 75%;
+}
