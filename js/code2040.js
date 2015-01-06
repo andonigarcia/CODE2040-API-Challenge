@@ -7,8 +7,6 @@ var stages = {"register":0, "stageI":0, "stageII":0, "stageIII":0, "stageIV":0};
 var port = 80;
 var domain = "http://challenge.code2040.org/api/";
 
-// Functions
-
 function CODE2040Post(page, message){
     var url = domain + page;
     return $.post(url, message, "json");
@@ -37,7 +35,7 @@ function Validate(page, values, stage){
         if(stage === "register"){
             token = res;
             GetMessage(token);
-            output = "<br /><br />Your token is: " + token;
+            output = "<br />Your token is: " + token;
         }
         $(".ioresponse #resp").append(output);
         stages[stage] = 1;
@@ -155,22 +153,37 @@ function addTime(obj, obj2){
 }
 
 function Register(){
-    if(isComplete())
-        return;
-    
     var regMessage = "<span>Welcome to the CODE2040 API Challenge.</span><br /><br />Please input the email-address that you registered for CODE2040 with and your github web address. If you are just looking at the site and aren't registered for CODE2040, click submit without entering anything to go through with Andoni's credentials.";
     $(".ioresponse #desc").empty().append(regMessage);
     $(".ioresponse #resp").empty();
+    $("form").show();
     if (stages.register === 1){
-        var resp = "Sorry, you've already registered! Either refresh the page or click on a Stage.";
+        var resp = "<em>Sorry, you've already registered! If you want to reset everything, you are allowed to re-register (by simply filling out the form and clicking 'Register' again.).</em>";
         $(".ioresponse #resp").empty().append(resp);
     } else {
         var email = "andoni@uchicago.edu";
         var github = "https://github.com/andonigarcia/CODE2040-API-Challenge";
-        
-        var values = {"email":email,
-                      "github":github};
-        Validate("register", values, "register");
+        $("#regform").submit(function(){
+            $(".ioresponse #resp").empty();
+            var arr = $(this).serializeArray();
+            console.log(JSON.stringify(arr));
+            console.log(email + " " + github);
+            if(arr[0].value !== ""){
+                email = arr[0].value;
+            }
+            if(arr[1].value !== ""){
+                github = arr[1].value;
+            }
+            console.log(email + " " + github);
+            var values = {"email":email,
+                          "github":github};
+            for(var s in stages){
+                stages[s] = 0;
+            }
+            $("form").hide();
+            Validate("register", values, "register");
+            return false;
+        });
     }
 }
 
