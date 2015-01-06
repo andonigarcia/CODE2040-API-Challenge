@@ -13,9 +13,18 @@ body{
     background-color: #8ca490;
     color: black;
     margin: 0;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
     padding: 0;
     position: absolute;
+}
+
+/* Everything is a border-box */
+
+.header, .completions, .content{
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
 }
 
 /* Header */
@@ -23,9 +32,6 @@ body{
 .header{
     background-color: #8899A2;
     border-bottom: 1px solid black;
-    -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
     height: 60px;
     float: left;
     margin: 0;
@@ -62,29 +68,35 @@ body{
 /* Completion */
 
 .completions{
-    background-color: #9c878d;
+    height: 105px;
+    padding: 0;
+    position: relative;
+    margin: 0;
+}
+
+.completions div{
     -webkit-border-radius: 4px;
        -moz-border-radius: 4px;
             border-radius: 4px;
-    -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
-    height: 50px;
+    background-color: #9c878d;
+    height: 75px;
     position: relative;
-    margin: 2% auto;
-    top: 60px;  /* Height of header */
-    width: 85%;
+    padding: 0;
+    margin: 90px auto 0 auto;
+    width: 80%;
+}
+
+.completions div p{
+    font-size: 18px;
+    padding-top: 25px;
+    text-align: center;
 }
 
 /* Content */
 
 .content{
-    -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
-    margin: 0 auto;
+    margin: 0 5%;
     position: relative;
-    top: 85px;
     width: 90%;
 }
 
@@ -95,17 +107,13 @@ body{
     -webkit-border-radius: 4px;
        -moz-border-radius: 4px;
             border-radius: 4px;
-    -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
     float: left;
-    height: 60%;
+    height: 320px;
     position: relative;
     width: 125px;
 }
 
 .buttons div{
-    top: 4%;
     position: relative;
 }
 
@@ -135,11 +143,23 @@ body{
     -webkit-border-radius: 4px;
        -moz-border-radius: 4px;
             border-radius: 4px;
-    -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
     float: right;
-    height: 60%;
+    min-height: 320px;
+    padding: 0;
     position: relative;
     width: 75%;
+}
+
+.ioresponse p{
+    font-size: 16px;
+    font-family: Times, serif;
+    padding: 15px 20px;
+    position: relative;
+    width: 90%;
+}
+
+.ioresponse p span{
+    font-size: 18px;
+    text-decoration: underline;
+    text-align: center;
 }

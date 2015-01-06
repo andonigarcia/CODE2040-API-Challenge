@@ -19,184 +19,177 @@ function GetMessage(token){
     getMessage = JSON.stringify(values);
 }
 
-function Register(){
-    if (stages.register === 1){
-        var resp = "Sorry, you've already registered!";
-        $(".ioresponse p").empty().append(resp);
-    } else {
-        var url = domain + "register";
-        var values = {"email":"andoni@uchicago.edu",
-                      "github":"https://github.com/andonigarcia/CODE2040-API-Challenge"};
-        var JSONData = JSON.stringify(values);
-        $.when(CODE2040Post("register", JSONData)).then(function(data){
-            token = data.result;
-            var output = "Your token is: " + token;
-            $(".ioresponse p").empty().append(output);
+function RegFirst(){
+    var reg = "You need to register first silly! Click that step first. We can't talk to the server otherwise!";
+    $(".ioresponse #resp").empty().append(reg);
+}
+
+function StageComplete(){
+    var resp = "You've already completed this stage! Go ahead and complete the next Stage(s).";
+    $(".ioresponse #resp").empty().append(resp);
+}
+
+function Validate(page, values, stage){
+    var JSONData = JSON.stringify(values);
+    $.when(CODE2040Post(page, JSONData)).then(function(data){
+        var res = data.result;
+        var output = "<br /><br />The result is: " + res;
+        if(stage === "register"){
+            token = res;
             GetMessage(token);
-            stages.register = 1; 
-        });
-    }
+            output = "<br /><br />Your token is: " + token;
+        }
+        $(".ioresponse #resp").append(output);
+        stages[stage] = 1;
+        setTimeout(isComplete(), 3000);
+    });
 }
 
-function StageI(){
-    var string;
-    var p = $(".ioresponse p");
-    if(stages.register === 0){
-        var resp = "You need to register first!";
-        p.empty.append(resp);
-        return;
-    } else if(stages.stageI === 1){
-        var resp = "You've already completed this stage!";
-        p.empty().append(resp);
-        return;
-    } else {
-        // Get String
-        $.when(CODE2040Post("getstring", getMessage)).then(function(data){
-            string = data.result;
-            var output = "Your string is: " + string;
-            p.empty().append(output);
-            string = string.split("").reverse().join("");
-            var output2 = "The reversed string is: " + string;
-            p.append("<br />" + output2);
-            
-            var values = {"token":token, "string":string};
-            var JSONData = JSON.stringify(values);
-            $.when(CODE2040Post("validatestring", JSONData)).then(function(data){
-                var res = data.result;
-                var output = "The result: " + res;
-                p.append("<br />" + output);
-                stages.stageI = 1;
-            });
-        });
+function isComplete(){
+    for(var s in stages){
+        if(stages[s] === 0)
+            return 0;
     }
+    var Congrats = "<span>CONGRATULATIONS!</span><br /><br />You have solved every single Stage of the CODE2040 API Challenge. I hope you enjoyed it! You can see the <a href='https://github.com/andonigarcia/CODE2040-API-Challenge' target='_blank'>source code</a> or try to <a href='http://challenge.code2040.org' target='_blank'>do the challenge</a> yourself!";
+    $(".ioresponse #desc").empty().append(Congrats);
+    $(".ioresponse #resp").empty();
+    return 1;
 }
 
-function StageII(){
-    var needle, haystack, index = -1;
-    var p = $(".ioresponse p");
-    if(stages.register === 0){
-        var resp = "You need to register first!";
-        p.empty.append(resp);
-        return;
-    } else if(stages.stageII === 1){
-        var resp = "You've already completed this stage!";
-        p.empty().append(resp);
-        return;
-    } else {
-        // Get String
-        $.when(CODE2040Post("haystack", getMessage)).then(function(data){
-            needle = data.result.needle;
-            haystack = data.result.haystack;
-            var output = "Your needle is: " + needle;
-            var output2 = "<br />Your haystack is: " + haystack;
-            p.empty().append(output + output2);
-            index = haystack.indexOf(needle);
-            var output3 = "<br />Your needle is at index: " + index;
-            p.append(output3);
-            
-            var values = {"token":token, "needle":index};
-            var JSONData = JSON.stringify(values);
-            $.when(CODE2040Post("validateneedle", JSONData)).then(function(data){
-                var res = data.result;
-                var output = "The result: " + res;
-                p.append("<br />" + output);
-                stages.stageII = 1;
-            });
-        });
-    }
-}
+function Stages(stage, func, objs){
+    // Essential Variables
+    var messages = {"stageI":"<span>Stage I: Reverse a String</span><br /><br />In this stage, the server will give us a random string. We will then reverse it and send it back to the server!",
+                    "stageII":"<span>Stage II: Needle in a Haystack</span><br /><br />Here, we are given a random string (the needle) and an array of strings (the haystack). We must parse the array and then send the server the index of the needle in the haystack!",
+                    "stageIII":"<span>Stage III: Prefix</span><br /><br />Again we are given an array. But this time we are also given a prefix, and we must filter out all the elements of the array that start with the prefix!",
+                    "stageIV":"<span>Stage IV: The Dating Game</span><br /><br />This is the final challenge! Here, you will be given a random datestamp and an interval (in seconds). We must add the two and give the correct ISO 8601 datestamp back to the server!"};
+    var getPages = {"stageI":"getstring",
+                    "stageII":"haystack",
+                    "stageIII":"prefix",
+                    "stageIV":"time"};
+    var sendPages = {"stageI":"validatestring",
+                     "stageII":"validateneedle",
+                     "stageIII":"validateprefix",
+                     "stageIV":"validatetime"};
+    var respObjs = {"stageI":["string", "reversed string", "string"],
+                    "stageII":["needle", "haystack", "index of the needle", "needle"],
+                    "stageIII":["prefix", "array", "filtered array", "array"],
+                    "stageIV":["interval", "datestamp", "new datestamp", "datestamp"]};
+    var values = {"token":token};
+    var obj="", obj2="", tmp1, tmp2, fout, res, output;
 
-function StageIII(){
-    var prefix, array, farr=[];
-    var p = $(".ioresponse p");
+    // Check if it the stages are already complete
+    if(isComplete())
+        return;
+    // If not, then load the proper heading message
+    $(".ioresponse #desc").empty().append(messages[stage]);
+    var writeTo = $(".ioresponse #resp").empty();
+    // If not registered, you must register first.
     if(stages.register === 0){
-        var resp = "You need to register first!";
-        p.empty.append(resp);
+        RegFirst();
         return;
-    } else if(stages.stageIII === 1){
-        var resp = "You've already completed this stage!";
-        p.empty().append(resp);
+    // If stage is already complete, you cannot resubmit it.
+    } else if(stages[stage] === 1){
+        StageComplete();
         return;
+    // Else handle the stage
     } else {
-        // Get String
-        $.when(CODE2040Post("prefix", getMessage)).then(function(data){
-            prefix = data.result.prefix;
-            array = data.result.array;
-            var output = "Your prefix is: " + prefix;
-            var output2 = "<br />Your array is: " + array;
-            p.empty().append(output + output2);
-            for (var i = 0; i < array.length; i++){
-		if(array[i].indexOf(prefix) !== 0){
-			farr.push(array[i]);
-		}
+        $.when(CODE2040Post(getPages[stage], getMessage)).then(function(data){
+            res = data.result;
+            // One object to handle
+            if(objs === 0){
+                obj = res;
+                output = "Your " + respObjs[stage][objs++] + " is: " + obj;
+            // Two objects to handle
+            } else if(objs === 1){
+                tmp1 = respObjs[stage][0];
+                obj = res[tmp1];
+                tmp2 = respObjs[stage][objs++];
+                obj2 = res[tmp2];
+                output = "Your " + tmp1 + " is: " + obj;
+                if(stage === "stageIV")
+                    output += "<br /><br />Your " + tmp2 + " is: " + obj2;
+                else
+                    output += "<br /><br />Your " + tmp2 + " is: " + obj2.join(", ");
+            } else {
+                output = "Error - check your objs";
             }
-            var output3 = "<br />Your filtered array is: " + farr;
-            p.append(output3);
+            writeTo.append(output);
+            // Execute the function -- main point of the API Challenge
+            fout = func(obj, obj2);
+            writeTo.append("<br /><br />The " + respObjs[stage][objs++] + " is: " + fout[0]);
             
-            var values = {"token":token, "array":farr};
-            var JSONData = JSON.stringify(values);
-            $.when(CODE2040Post("validateprefix", JSONData)).then(function(data){
-                var res = data.result;
-                var output = "The result: " + res;
-                p.append("<br />" + output);
-                stages.stageIII = 1;
-            });
+            // Add the value to the object and validate it
+            
+            values[respObjs[stage][objs]] = fout[1];
+            Validate(sendPages[stage], values, stage);
         });
     }
 }
 
-function StageIV(){
-    var interval, datestamp;
-    var p = $(".ioresponse p");
-    if(stages.register === 0){
-        var resp = "You need to register first!";
-        p.empty.append(resp);
+function revStr(obj, obj2){
+    var string = obj;
+    string = string.split("").reverse().join("");
+    return [string, string];
+}
+
+function needleIndex(obj, obj2){
+    var index = obj2.indexOf(obj);
+    return [index, index];
+}
+
+function filtArr(obj, obj2){
+    var arr = [];
+    for (var i = 0; i < obj2.length; i++){
+	if(obj2[i].indexOf(obj) !== 0){
+            arr.push(obj2[i]);
+	}
+    }
+    return [arr.join(", "), arr];
+}
+
+function addTime(obj, obj2){
+     var date = new Date(obj2);
+     var ms = date.getTime() + (obj * 1000);
+     var datestamp = new Date(ms).toISOString();
+     return [datestamp, datestamp];
+}
+
+function Register(){
+    if(isComplete())
         return;
-    } else if(stages.stageIV === 1){
-        var resp = "You've already completed this stage!";
-        p.empty().append(resp);
-        return;
+    
+    var regMessage = "<span>Welcome to the CODE2040 API Challenge.</span><br /><br />Please input the email-address that you registered for CODE2040 with and your github web address. If you are just looking at the site and aren't registered for CODE2040, click submit without entering anything to go through with Andoni's credentials.";
+    $(".ioresponse #desc").empty().append(regMessage);
+    $(".ioresponse #resp").empty();
+    if (stages.register === 1){
+        var resp = "Sorry, you've already registered! Either refresh the page or click on a Stage.";
+        $(".ioresponse #resp").empty().append(resp);
     } else {
-        // Get String
-        $.when(CODE2040Post("time", getMessage)).then(function(data){
-            interval = data.result.interval;
-            datestamp = data.result.datestamp;
-            var output = "Your interval is: " + interval;
-            var output2 = "<br />Your datestamp is: " + datestamp;
-            p.empty().append(output + output2);
-            
-            var date = new Date(datestamp);
-            var ms = date.getTime() + (interval * 1000);
-            datestamp = new Date(ms).toISOString();
-            var output3 = "<br />Your new time is: " + datestamp;
-            p.append(output3);
-            
-            var values = {"token":token, "datestamp":datestamp};
-            var JSONData = JSON.stringify(values);
-            $.when(CODE2040Post("validatetime", JSONData)).then(function(data){
-                var res = data.result;
-                var output = "The result: " + res;
-                p.append("<br />" + output);
-                stages.stageIV = 1;
-            });
-        });
+        var email = "andoni@uchicago.edu";
+        var github = "https://github.com/andonigarcia/CODE2040-API-Challenge";
+        
+        var values = {"email":email,
+                      "github":github};
+        Validate("register", values, "register");
     }
 }
 
 $(document).ready(function(){
+    Register();
+    
     $("#register").click(function(){
         Register(); 
     });
     $("#stageI").click(function(){
-        StageI();
+        Stages("stageI", revStr, 0);
     });
     $("#stageII").click(function(){
-        StageII();
+        Stages("stageII", needleIndex, 1);
     });
     $("#stageIII").click(function(){
-        StageIII();
+        Stages("stageIII", filtArr, 1);
     });
     $("#stageIV").click(function(){
-        StageIV();
+        Stages("stageIV", addTime, 1);
     });
 });
