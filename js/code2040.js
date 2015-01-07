@@ -179,15 +179,10 @@ function Register(){
         $("#regform").submit(function(){
             $(".ioresponse #resp").empty();
             var arr = $(this).serializeArray();
-            console.log(JSON.stringify(arr));
-            console.log(email + " " + github);
-            if(arr[0].value !== ""){
+            if(arr[0].value !== "")
                 email = arr[0].value;
-            }
-            if(arr[1].value !== ""){
+            if(arr[1].value !== "")
                 github = arr[1].value;
-            }
-            console.log(email + " " + github);
             var values = {"email":email,
                           "github":github};
             for(var s in stages){

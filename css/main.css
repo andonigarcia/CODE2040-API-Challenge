@@ -137,6 +137,7 @@ body{
 .content{
     margin: 0 5%;
     position: relative;
+    padding-bottom: 50px;
     width: 90%;
 }
 
@@ -150,6 +151,7 @@ body{
             border-radius: 4px;
     float: left;
     height: 320px;
+    margin-bottom: 50px;
     position: relative;
     width: 125px;
 }
@@ -187,6 +189,7 @@ body{
             border-radius: 4px;
     float: right;
     min-height: 320px;
+    margin-bottom: 50px;
     padding: 0;
     position: relative;
     width: 75%;
