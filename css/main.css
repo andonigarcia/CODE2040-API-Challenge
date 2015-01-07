@@ -74,11 +74,12 @@ body{
     margin: 0;
 }
 
-.completions div{
+.completions .containcompletions{
     -webkit-border-radius: 4px;
        -moz-border-radius: 4px;
             border-radius: 4px;
     background-color: #9c878d;
+    border: 1px solid #5f4e53;
     height: 75px;
     position: relative;
     padding: 0;
@@ -86,11 +87,50 @@ body{
     width: 80%;
 }
 
-.completions div p{
-    font-size: 18px;
-    padding-top: 25px;
-    text-align: center;
+.completions .checkboxes{
+    margin: 0 auto;
+    width: 90%;
 }
+
+.completions .checkboxes div{
+    display: inline-block;
+    font-size: 15px;
+    padding: 0;
+    margin: 12px 0;
+    text-align: center;
+    min-width: 90px;
+    width: 19%;
+}
+
+.completions .checkboxes input, .completions .checkboxes p{
+    padding: 0;
+    margin: 5px;
+}
+
+.completions .checkboxes input{
+    display: none;
+}
+
+.completions .checkboxes span{
+    background: #9898FF;
+    border: 1px solid black;
+    -webkit-border-radius: 9px;
+       -moz-border-radius: 9px;
+            border-radius: 9px;
+    display: inline-block;
+    width: 28px;
+    height: 20px;
+}
+
+.completions .checkboxes input:checked + span{
+    background: #ff9898;
+}
+
+.completions .checkboxes input:checked ~ p{
+    color: #0e2643;
+    font-weight: bold;
+}
+
 
 /* Content */
 
@@ -104,6 +144,7 @@ body{
 
 .buttons{
     background-color: #9c878d;
+    border: 1px solid #5f4e53;
     -webkit-border-radius: 4px;
        -moz-border-radius: 4px;
             border-radius: 4px;
@@ -140,6 +181,7 @@ body{
 
 .ioresponse{
     background-color: #9c878d;
+    border: 1px solid #5f4e53;
     -webkit-border-radius: 4px;
        -moz-border-radius: 4px;
             border-radius: 4px;

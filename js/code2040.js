@@ -18,12 +18,12 @@ function GetMessage(token){
 }
 
 function RegFirst(){
-    var reg = "You need to register first silly! Click that step first. We can't talk to the server otherwise!";
+    var reg = "You need to register first silly! Click 'Register' on the left hand tabs first. We can't talk to the server otherwise!";
     $(".ioresponse #resp").empty().append(reg);
 }
 
 function StageComplete(){
-    var resp = "You've already completed this stage! Go ahead and complete the next Stage(s).";
+    var resp = "You've already completed this stage! Go ahead and complete the next stage(s).";
     $(".ioresponse #resp").empty().append(resp);
 }
 
@@ -39,16 +39,29 @@ function Validate(page, values, stage){
         }
         $(".ioresponse #resp").append(output);
         stages[stage] = 1;
-        setTimeout(isComplete(), 3000);
+        setTimeout(isComplete(), 5000);
     });
 }
 
+function checkBoxes(){
+    for(var s in stages){
+        var elem = "#";
+        elem += s;
+        elem += "box";
+        if(stages[s] === 0)
+            $(elem).prop("checked", false);
+        else
+            $(elem).prop("checked", true);
+    }
+}
+
 function isComplete(){
+    checkBoxes();
     for(var s in stages){
         if(stages[s] === 0)
             return 0;
     }
-    var Congrats = "<span>CONGRATULATIONS!</span><br /><br />You have solved every single Stage of the CODE2040 API Challenge. I hope you enjoyed it! You can see the <a href='https://github.com/andonigarcia/CODE2040-API-Challenge' target='_blank'>source code</a> or try to <a href='http://challenge.code2040.org' target='_blank'>do the challenge</a> yourself!";
+    var Congrats = "<span>CONGRATULATIONS!</span><br /><br />You have solved every single stage of the CODE2040 API Challenge. I hope you enjoyed it! You can see the <a href='https://github.com/andonigarcia/CODE2040-API-Challenge' target='_blank'>source code</a> or try to <a href='http://challenge.code2040.org' target='_blank'>do the challenge</a> yourself!";
     $(".ioresponse #desc").empty().append(Congrats);
     $(".ioresponse #resp").empty();
     return 1;
@@ -58,7 +71,7 @@ function Stages(stage, func, objs){
     // Essential Variables
     var messages = {"stageI":"<span>Stage I: Reverse a String</span><br /><br />In this stage, the server will give us a random string. We will then reverse it and send it back to the server!",
                     "stageII":"<span>Stage II: Needle in a Haystack</span><br /><br />Here, we are given a random string (the needle) and an array of strings (the haystack). We must parse the array and then send the server the index of the needle in the haystack!",
-                    "stageIII":"<span>Stage III: Prefix</span><br /><br />Again we are given an array. But this time we are also given a prefix, and we must filter out all the elements of the array that start with the prefix!",
+                    "stageIII":"<span>Stage III: Prefix</span><br /><br />Again we are given an array. But this time we are also given a prefix and we must filter out all the elements of the array that start with the prefix!",
                     "stageIV":"<span>Stage IV: The Dating Game</span><br /><br />This is the final challenge! Here, you will be given a random datestamp and an interval (in seconds). We must add the two and give the correct ISO 8601 datestamp back to the server!"};
     var getPages = {"stageI":"getstring",
                     "stageII":"haystack",
@@ -75,12 +88,12 @@ function Stages(stage, func, objs){
     var values = {"token":token};
     var obj="", obj2="", tmp1, tmp2, fout, res, output;
 
-    // Check if it the stages are already complete
-    if(isComplete())
-        return;
     // If not, then load the proper heading message
     $(".ioresponse #desc").empty().append(messages[stage]);
     var writeTo = $(".ioresponse #resp").empty();
+     // Check if it the stages are already complete
+    if(isComplete())
+        return;
     // If not registered, you must register first.
     if(stages.register === 0){
         RegFirst();
@@ -153,12 +166,12 @@ function addTime(obj, obj2){
 }
 
 function Register(){
-    var regMessage = "<span>Welcome to the CODE2040 API Challenge.</span><br /><br />Please input the email-address that you registered for CODE2040 with and your github web address. If you are just looking at the site and aren't registered for CODE2040, click submit without entering anything to go through with Andoni's credentials.";
+    var regMessage = "<span>Welcome to the CODE2040 API Challenge.</span><br /><br />Please input the email-address and github repo url that you registered for CODE2040 with. If you are just looking at the site and aren't registered for CODE2040, you can click submit without entering anything to go through using Andoni's credentials.";
     $(".ioresponse #desc").empty().append(regMessage);
     $(".ioresponse #resp").empty();
     $("form").show();
     if (stages.register === 1){
-        var resp = "<em>Sorry, you've already registered! If you want to reset everything, you are allowed to re-register (by simply filling out the form and clicking 'Register' again.).</em>";
+        var resp = "<em>Sorry, you've already registered! If you want to reset everything, you are allowed to re-register (by simply filling out the form and clicking 'Register!' again.).</em>";
         $(".ioresponse #resp").empty().append(resp);
     } else {
         var email = "andoni@uchicago.edu";

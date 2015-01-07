@@ -18,8 +18,29 @@
                <a href="http://challenge.code2040.org/" target="_blank">CODE2040 API Challenge</a></p>
         </div>
         <div class="completions">
-            <div>
-                <p>Welcome to the CODE2040 API Challenge Solutions</p>
+            <div class="containcompletions">
+                <div class="checkboxes">
+                    <div class="box">
+                        <input id="registerbox" type="checkbox" disabled /><span></span>
+                        <p>Registered</p>
+                    </div>
+                    <div class="box">
+                        <input id="stageIbox" type="checkbox" disabled /><span></span>
+                        <p>Stage I</p>
+                    </div>
+                    <div class="box">
+                        <input id="stageIIbox" type="checkbox" disabled /><span></span>
+                        <p>Stage II</p>
+                    </div>
+                    <div class="box">
+                        <input id="stageIIIbox" type="checkbox" disabled /><span></span>
+                        <p>Stage III</p>
+                    </div>
+                    <div class="box">
+                        <input id="stageIVbox" type="checkbox" disabled /><span></span>
+                        <p>Stage IV</p>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="content">
@@ -41,7 +62,7 @@
                                    placeholder="Email" autofocus/>
                         </label>
                         <label for="github">
-                            <input type="url" id="github" name="github" 
+                            <input type="text" id="github" name="github" 
                                    placeholder="Github"/>
                         </label>
                         <button type="submit">Register!</button>
