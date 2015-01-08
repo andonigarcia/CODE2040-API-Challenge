@@ -1,16 +1,14 @@
-/*
- * Andoni M. Garcia. 2015.
+/* Andoni M. Garcia. 2015.
  * CODE2040 API Challenge
  */
 
 body, html{
     height: 100%;
-    min-height: 100%;
     width: 100%;
-    min-width: 100%;
 }
+
 body{
-    background-color: #8ca490;
+    background-color: #BFD4D9;
     color: black;
     margin: 0;
     overflow-x: hidden;
@@ -19,71 +17,87 @@ body{
     position: absolute;
 }
 
-/* Everything is a border-box */
-
-.header, .completions, .content, .buttons, .ioresponse{
+/* General Classes */
+.box{
     -webkit-box-sizing: border-box;
        -moz-box-sizing: border-box;
             box-sizing: border-box;
 }
 
+.mainContent{
+    background-color: #17A697;
+    border: 2px solid #0E5454;
+    -webkit-border-radius: 5px;
+       -moz-border-radius: 5px;
+            border-radius: 5px;
+}
+
+.buttonBox{
+    background: #FFAE60;
+    border: 1px solid #082E2E;
+    -webkit-border-radius: 4px;
+       -moz-border-radius: 4px;
+            border-radius: 4px;
+}
+
 /* Header */
 
 .header{
-    background-color: #8899A2;
-    border-bottom: 1px solid black;
-    height: 60px;
-    float: left;
+    background-color: #638CA6;
+    border-bottom: 1px solid #09403A;
+    border-left: 1px solid #09403A;
+    border-right: 1px solid #09403A;
+    -webkit-border-radius: 0 0 12px 12px;
+       -moz-border-radius: 0 0 12px 12px;
+            border-radius: 0 0 12px 12px;
+    color: #6E1B32;
+    min-height: 60px;
     margin: 0;
-    padding: 0;
-    position: absolute;
+    padding: 15px;
+    position: relative;
+    text-align: center;
     width: 100%;
 }
 
 .header p{
-    color: #800000;
-    font-family: Times, serif;
+    display: inline-block;
+    font-family: "Lora", Times, serif;
+    font-weight: bold;
     font-size: 18px;
-    margin-left: 5%;
-    text-align: left;
-    vertical-align: middle;
+    margin: auto 0;
 }
 
-.header p span{
-    font-weight: bold;
-    font-size: 24px;
+.header .ToBold{
+    font-family: "Pacifico", Impact, serif;
+    font-size: 36px;
     margin-right: 8px;
 }
 
 .header a, .header a:visited{
-    color: #993232;
-    text-decoration: none;
+    color: #6E1B32;
+    text-decoration: underline;
 }
 
 .header a:hover, .header a:active{
-    color: #993232;
+    color: #BF0F2C;
     text-decoration: underline;
 }
 
 /* Completion */
 
 .completions{
+    display: none;
+    font-family: "Playfair Display", Times, serif;
+    font-size: 18px;
     height: 105px;
     padding: 0;
-    position: relative;
     margin: 0;
 }
 
 .completions .containcompletions{
-    -webkit-border-radius: 4px;
-       -moz-border-radius: 4px;
-            border-radius: 4px;
-    background-color: #9c878d;
-    border: 1px solid #5f4e53;
     height: 75px;
-    position: relative;
     padding: 0;
-    margin: 90px auto 0 auto;
+    margin: 25px auto 0 auto;
     width: 80%;
 }
 
@@ -112,113 +126,95 @@ body{
 }
 
 .completions .checkboxes span{
-    background: #9898FF;
-    border: 1px solid black;
-    -webkit-border-radius: 9px;
-       -moz-border-radius: 9px;
-            border-radius: 9px;
+    -webkit-border-radius: 8px;
+       -moz-border-radius: 8px;
+            border-radius: 8px;
     display: inline-block;
     width: 28px;
     height: 20px;
 }
 
 .completions .checkboxes input:checked + span{
-    background: #ff9898;
+    background: #FA4F5E;
 }
 
 .completions .checkboxes input:checked ~ p{
-    color: #0e2643;
     font-weight: bold;
 }
-
 
 /* Content */
 
 .content{
-    margin: 0 5%;
-    position: relative;
-    padding-bottom: 50px;
-    width: 90%;
+    margin: 25px 10% 0 10%;
+    width: 80%;
 }
 
 /* Buttons */
 
 .buttons{
-    background-color: #9c878d;
-    border: 1px solid #5f4e53;
-    -webkit-border-radius: 4px;
-       -moz-border-radius: 4px;
-            border-radius: 4px;
-    float: left;
-    height: 320px;
-    margin-bottom: 50px;
-    position: relative;
-    width: 125px;
+    min-height: 80px;
+    margin: 0 0 20px 0;
+    width: 100%;
 }
-
 .buttons div{
-    position: relative;
+    margin: 10px auto;
+    text-align: center;
+    width: 90%;
 }
-
 .buttons button{
-    background: #9898FF;
-    border: 1px solid black;
-    border-radius: 7px;
-    display: block;
-    margin: 30px auto;
+    display: inline-block;
+    font-family: "Playfair Display", Times, serif;
+    font-size: 14px;
+    margin: 10px 5px;
     padding: 5px 5px;
-    position: relative;
     width: 75px;
 }
 
-.buttons button:hover{
-    background: #cc98ff;
-}
-
-.buttons button:active{
-    background: #ff9898;
+.buttons button:hover, .buttons button:active{
+    background: #FA4F5E;
 }
 
 /* I/O Content */
 
 .ioresponse{
-    background-color: #9c878d;
-    border: 1px solid #5f4e53;
-    -webkit-border-radius: 4px;
-       -moz-border-radius: 4px;
-            border-radius: 4px;
-    float: right;
     min-height: 320px;
-    margin-bottom: 50px;
-    padding: 0;
+    margin: 0;
+    margin-bottom: 30px;
+    padding: 10px 10px 20px 10px;
     position: relative;
-    width: 75%;
+    width: 100%;
 }
 
 .ioresponse p{
-    font-size: 16px;
-    font-family: Times, serif;
-    padding: 15px 20px;
-    position: relative;
+    font-family: "Lora", Times, serif;
+    font-size: 14px;
+    margin: 0 auto 10px auto;
     width: 90%;
 }
 
-.ioresponse p span{
+.ioresponse a, .ioresponse a:visited{
+    color: #6E1B32;
+    text-decoration: none;
+}
+
+.ioresponse a:hover, .ioresponse a:active{
+    text-decoration: underline;
+}
+
+.ioresponse .named{
     font-size: 18px;
+    font-weight: bold;
+    margin: 5px 0 15px 0;
     text-decoration: underline;
     text-align: center;
 }
 
 .ioresponse form{
-    -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
     display: hidden;
 }
 
 .ioresponse form div{
     margin: 0 auto;
-    position: relative;
     width: 100%;
 }
 
@@ -226,30 +222,64 @@ body{
     -webkit-border-radius: 3px;
        -moz-border-radius: 3px;
             border-radius: 3px;
-    border: solid 2px #bbb;
-    color: #555;
+    border: solid 2px #777;
+    color: #444;
     display: block;
     margin: 5px auto;
     padding: 3px;
 }
 
 .ioresponse form button{
-    background: #9898FF;
-    border: 1px solid black;
-    -webkit-border-radius: 6px;
-       -moz-border-radius: 6px;
-            border-radius: 6px;
     display: block;
+    font-family: "Playfair Display", Times, serif;
+    font-size: 14px;
     margin: 7px auto;
     padding: 5px 5px;
-    position: relative;
     width: 75px;
 }
 
-.ioresponse form button:hover{
-    background: #cc98ff;
+.ioresponse form button:hover, .ioresponse form button:active{
+    background: #FA4F5E;
 }
 
-.ioresponse form button:active{
-    background: #ff9898;
+/* Media Queries */
+@media(min-width: 666px){
+    .completions{
+        display: block;
+    }
+    .content{
+        margin-top: 0;
+    }
+    .buttons{
+        float: left;
+        height: 320px;
+        margin: 0 2% 30px 0;
+        width: 21%;
+    }
+
+    .buttons button{
+        display: block;
+        margin: 26px auto;
+    }
+    .ioresponse{
+        float: left;
+        margin: 0 0 30px 2%;
+        width: 75%;
+    }
+}
+@media(min-width: 925px){
+    .buttons{
+        width: 18%;
+    }
+    .ioresponse{
+        width: 78%
+    }
+}
+@media(min-width: 1100px){
+    .buttons{
+        width: 16%;
+    }
+    .ioresponse{
+        width: 80%
+    }
 }

@@ -10,52 +10,59 @@
         <meta name="author" content="Andoni M. Garcia">
         
         <link rel="stylesheet" href="css/main.css">
+        <link href='http://fonts.googleapis.com/css?family=Playfair+Display|Lora|Pacifico' rel='stylesheet' type='text/css'>
     </head>
     <body>
-       <div class="header">
-           <p><span>Andoni M. Garcia:</span>
-               Solutions to the
+       <div class="header box">
+            <p class="ToBold">Andoni Garcia</p>
+            <p>Solutions to the
                <a href="http://challenge.code2040.org/" target="_blank">CODE2040 API Challenge</a></p>
         </div>
-        <div class="completions">
-            <div class="containcompletions">
+        
+        <div class="completions box">
+            <div class="containcompletions mainContent">
                 <div class="checkboxes">
                     <div class="box">
-                        <input id="registerbox" type="checkbox" disabled /><span></span>
+                        <input id="registerbox" type="checkbox" disabled />
+                        <span class="buttonBox"></span>
                         <p>Registered</p>
                     </div>
                     <div class="box">
-                        <input id="stageIbox" type="checkbox" disabled /><span></span>
+                        <input id="stageIbox" type="checkbox" disabled />
+                        <span class="buttonBox"></span>
                         <p>Stage I</p>
                     </div>
                     <div class="box">
-                        <input id="stageIIbox" type="checkbox" disabled /><span></span>
+                        <input id="stageIIbox" type="checkbox" disabled />
+                        <span class="buttonBox"></span>
                         <p>Stage II</p>
                     </div>
                     <div class="box">
-                        <input id="stageIIIbox" type="checkbox" disabled /><span></span>
+                        <input id="stageIIIbox" type="checkbox" disabled />
+                        <span class="buttonBox"></span>
                         <p>Stage III</p>
                     </div>
                     <div class="box">
-                        <input id="stageIVbox" type="checkbox" disabled /><span></span>
+                        <input id="stageIVbox" type="checkbox" disabled />
+                        <span class="buttonBox"></span>
                         <p>Stage IV</p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="content">
-            <div class="buttons">
+        <div class="content box">
+            <div class="buttons box mainContent">
                 <div>
-                    <button id="register">Register</button>
-                    <button id="stageI">Stage I</button>
-                    <button id="stageII">Stage II</button>
-                    <button id="stageIII">Stage III</button>
-                    <button id="stageIV">Stage IV</button>
+                    <button id="register" class="buttonBox">Register</button>
+                    <button id="stageI" class="buttonBox">Stage I</button>
+                    <button id="stageII" class="buttonBox">Stage II</button>
+                    <button id="stageIII" class="buttonBox">Stage III</button>
+                    <button id="stageIV" class="buttonBox">Stage IV</button>
                 </div>
             </div>
-            <div class="ioresponse">
-                <p id='desc'>Welcome to Andoni M. Garcia's CODE2040 API Challenge Webpage! Please click register on the left to get started!</p>
-                <form id="regform">
+            <div class="ioresponse box mainContent">
+                <p id='desc'></p>
+                <form id="regform" class="box">
                     <div>
                         <label for="email">
                             <input type="email" id="email" name="email"
@@ -65,7 +72,7 @@
                             <input type="text" id="github" name="github" 
                                    placeholder="Github"/>
                         </label>
-                        <button type="submit">Register!</button>
+                        <button class="buttonBox" type="submit">Register!</button>
                     </div>
                 </form>
                 <p id='resp'></p>
