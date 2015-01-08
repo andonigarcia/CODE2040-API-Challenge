@@ -9,7 +9,7 @@ Currently the languages I have are:
 1. Python - Complete
 2. JavaScript - Complete
 3. C - Complete (Cleaning up) - **Terminal Interface**
-4. JQuery/[Webpage](http://andonigarcia.github.io/CODE2040-API-Challenge) - Complete (Cleaning up) - **Web Interface**
+4. JQuery/[Webpage](http://andonigarcia.github.io/CODE2040-API-Challenge) - Complete - **Web Interface**
 4. PHP - In Queue to Start
 
 Hope you enjoy the challenge!
