@@ -40,14 +40,6 @@ function ReverseString2(){
 	console.log("The reversed string is: " + revString);
 }
 
-function ReverseString2(){
-	var string = response.result;
-	var array = string.split("");
-	var revArray = array.reverse();
-	revString = array.join("");
-	//console.log("The reversed string is: " + revString);
-}
-
 function PostString(){
 	var url = "http://challenge.code2040.org/api/validatestring";
 	var values = {"token":token,
