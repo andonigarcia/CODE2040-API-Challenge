@@ -3,8 +3,6 @@
 The code in this repository will produce a robust terminal-side application for the CODE2040 API Challenge.
 I have added a bit of defensive programming to the source code and have made strongly tested functions. Further, I
 have refined a lot of the mechanics. The limiting factor in execution will be the time to make and receive HTTP requests.
-This is *not* ready for final production, but has enough defensive programming to be suitable for public use currently.
-I still need to parse and handle bad json and bad responses (i.e. The server's answer for submitting the incorrect value).
 
 ## How To Use
 
@@ -28,7 +26,7 @@ interface's display of the under-the-hood values).
 
 1. Most of the time, when executing Stage IV, my output will be off by an hour. This has not happened in my Python or 
 JS versions. After some [research](http://stackoverflow.com/questions/310363/how-to-add-one-day-to-a-time-obtained-from-time)
-This may be a problem with my cygwin's GCC, and not with my code itself. It seems that when a date causes a shift from one
+this may be a problem with my cygwin's GCC, and not with my code itself. It seems that when a date causes a shift from one
 DST value to the other, cygwin's GCC does not recognize it and keeps the older DST setting. As such, sometimes my output will
 be off by an hour. I tested it briefly with an online IDE and indeed it ran fine on there. I'd like to have a better grasp
 on this outcome though.
