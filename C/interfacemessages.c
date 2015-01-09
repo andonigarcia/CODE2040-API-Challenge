@@ -23,14 +23,16 @@ void msg_welcome()
   system("clear");
   printf("Welcome to Andoni's solution to the CODE2040 API Challenge.\n\nIf"
          " you have any comments or questions, feel free to email me at: "
-         "andoni@uchicago.edu.\nYou can check out the source code: "
-         "https://github.com/andonigarcia/CODE2040-API-Challenge/C.\nEnjoy!\n");
+         "andoni@uchicago.edu\nYou can check out the source code: "
+         "https://github.com/andonigarcia/CODE2040-API-Challenge/C\nEnjoy!\n");
   return;
 }
 
 void msg_register()
 {
-  printf("\nFirst thing's first. You have to register!\n");
+  printf("\nFirst thing's first. You have to register!\n"
+         "(If your just checking out the code and not registered, enter"
+         " 'a' for each answer below)\n");
   return;
 }
 
@@ -61,8 +63,9 @@ void msg_success()
 
 void msg_failure()
 {
-  printf("\nGo through and manually check the answers. Most likely your "
-         "compiler or localtime settings did something wonky. Most of these"
+  printf("\nSorry you didn't complete the API Challenge :(\n\n"
+         "Go through and manually check the answers to each stage above. Most likely "
+         "your compiler or localtime settings did something wonky. Most of these"
          " functions are very thoroughly tested. If you aren't sure though,"
          " send your logs to: andoni@uchicago.edu and I'll get back to you ASAP.\n");
   return;
@@ -76,7 +79,7 @@ void msg_pass(char *stage)
 
 void msg_notPass(char *msg)
 {
-  printf("For some reason you did not pass. Here's the server's response: %s.\n", msg);
+  printf("For some reason you did not pass. Here's the server's response: %s\n", msg);
   return;
 }
 
@@ -90,7 +93,7 @@ void msg_stageIWelcome()
 
 void msg_stageIIWelcome()
 {
-  printf("\n~~~~~~~~~~~~~~Next up is Stage II: Needle in a Haystack.~~~~~~~~~~~~~~"
+  printf("\n~~~~~~~~~~~~~~Next up is Stage II: Needle in a Haystack~~~~~~~~~~~~~~"
         "\n\nHere you will be given an array of random words (the haystack) and"
         " a word that matches only one of the words in the array (the needle). "
         "Our program will then find the index of that word in the array!\n");
@@ -99,7 +102,7 @@ void msg_stageIIWelcome()
 
 void msg_stageIIIWelcome()
 {
-  printf("\n~~~~~~~~~~~~~~Wow great work! Here is Stage III: Prefix.~~~~~~~~~~~~~~"
+  printf("\n~~~~~~~~~~~~~~Wow great work! Here is Stage III: Prefix~~~~~~~~~~~~~~"
         "\n\nIn this stage, you will get an array of words and a prefix. Then, "
         "our program will go through and filter out any of the words in the "
         "array that start with the prefix!\n");
@@ -108,12 +111,13 @@ void msg_stageIIIWelcome()
 
 void msg_stageIVWelcome()
 {
-  printf("\n~~~~~~~~~~~~~~The final stage! Stage IV: The Dating Game.~~~~~~~~~~~~~~"
+  printf("\n~~~~~~~~~~~~~~The final stage! Stage IV: The Dating Game~~~~~~~~~~~~~~"
         "\n\nThis stage will give you a datestamp and an interval. The program "
         "will then convert the datestamp to Unix time, add the interval to it, "
         "and then re-convert it back to an ISO 8601 datestamp. Be careful, there "
         "is a cygwin bug such that GCC messes up Daylights Savings when you "
         "straight add time together like this. It works on almost all other "
-        "compilers though. Sorry for the bug.\n");
+        "compilers though. Sorry for the bug. Check the source code for a link to"
+        " an SO post about the bug.\n");
   return;
 }

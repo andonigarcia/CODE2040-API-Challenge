@@ -27,8 +27,6 @@ int main(int argc, char **argv)
 	grabInfo(domain, port, "time", getMessage, &tmpInt, &datestamp, 2, 1);
 	interval = atoi(tmpInt);
 
-	printf("%s\n%s\n%lld\n", datestamp, tmpInt, interval);
-
 	// Add the Times
 	// Broken on cygwin, see: http://stackoverflow.com/questions/310363/how-to-add-one-day-to-a-time-obtained-from-time
 	// Tested on online IDE. Works fine.

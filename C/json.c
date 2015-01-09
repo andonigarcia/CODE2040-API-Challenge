@@ -121,6 +121,8 @@ jsonObjList *jsonParse(char *jsonData)
 				value[count++] = curr;
 				while((next = dataToParse[i++]) != ',' && next != '}')
 					value[count++] = next;
+				// So as to not jump ahead of the ','
+				i--;
 			}
 			// Add to list
 			jsonObj *parsedObj = new_jsonObj(key, value);
