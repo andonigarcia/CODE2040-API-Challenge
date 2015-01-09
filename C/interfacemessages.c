@@ -64,10 +64,14 @@ void msg_success()
 void msg_failure()
 {
   printf("\nSorry you didn't complete the API Challenge :(\n\n"
-         "Go through and manually check the answers to each stage above. Most likely "
-         "your compiler or localtime settings did something wonky. Most of these"
-         " functions are very thoroughly tested. If you aren't sure though,"
-         " send your logs to: andoni@uchicago.edu and I'll get back to you ASAP.\n");
+         "If only Stage IV failed, it may be a compiler bug. Check"
+         " the README.md to see my note on cygwin's GCC datestamp bug on"
+         " handling DST.\n\nOtherwise: Go through manually and check"
+         " the answers to each stage above. If each phase says pass"
+         " than it might be an internet connection problem. Else, "
+         " check your compiler and/or localtime settings - they may"
+         " have done something wonky. If you aren't sure though, send"
+         " your logs to: andoni@uchicago.edu and I'll get back to you ASAP.\n");
   return;
 }
 
@@ -114,10 +118,6 @@ void msg_stageIVWelcome()
   printf("\n~~~~~~~~~~~~~~The final stage! Stage IV: The Dating Game~~~~~~~~~~~~~~"
         "\n\nThis stage will give you a datestamp and an interval. The program "
         "will then convert the datestamp to Unix time, add the interval to it, "
-        "and then re-convert it back to an ISO 8601 datestamp. Be careful, there "
-        "is a cygwin bug such that GCC messes up Daylights Savings when you "
-        "straight add time together like this. It works on almost all other "
-        "compilers though. Sorry for the bug. Check the source code for a link to"
-        " an SO post about the bug.\n");
+        "and then re-convert it back to an ISO 8601 datestamp.\n");
   return;
 }
