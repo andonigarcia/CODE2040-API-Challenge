@@ -10,9 +10,9 @@ Currently the languages I have are:
 2. JavaScript - Complete
 3. C - Complete - **Terminal Interface**
 4. JQuery/[Webpage](http://andonigarcia.github.io/CODE2040-API-Challenge) - Complete - **Web Interface**
-4. PHP - In Queue to Start
+4. PHP - Complete
 
-Hope you enjoy the challenge!
+Hope you enjoy my solutions!
 
 [Andoni M. Garcia](http://andonigarcia.github.io/)<br />
 [andoni@uchicago.edu](mailto:andoni@uchicago.edu)
