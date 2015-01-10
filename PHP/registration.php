@@ -7,7 +7,6 @@
                 "email" => "andoni@uchicago.edu",
                 "github" => "https://github.com/andonigarcia/CODE2040-API-Challenge"
             );
-            
             $context = stream_context_create(array(
                 "http" => array(
                     "method" => "POST",
@@ -15,14 +14,13 @@
                     "content" => json_encode($values)
                 )
             ));
-            
             $resp = file_get_contents($url, FALSE, $context);
             if($resp === FALSE){
                 die("ERROR: No response from server. Check internet connection.");
             }
             $res = json_decode($resp);
             $token = $res->result;
-            echo($token);
+            echo("Your token is: " . $token);
     }
     Register();
 ?>
